@@ -9,7 +9,7 @@ button{
 }
 
 input{
-    border : none;
+    <!--border : none;-->s
     font-size : 20px;
     margin-left : 15px;
 }
@@ -35,11 +35,19 @@ span{
     padding : 3px;
 }
 
-.sub{
+.subToDo{
     border : 1px solid black;
     border-radius : 6px;
     width : 150px;
     height : 35px;
+    font-size : 15px;
+}
+
+.subAdd{
+    height : 30px;
+    width : 80px;
+    border : 1px solid black;
+    border-radius : 6px;
     font-size : 15px;
     margin-left : 200px;
 }
