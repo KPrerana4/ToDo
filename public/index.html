@@ -40,11 +40,11 @@ var items = [];
         let elements = "";
         for(index = 0; index < items.length; index++)
         {
-            elements += "<form method = \"POST\" action = \"/delete_item\">"
-            elements += "<div id =\"div"+index+"\">";
-            elements += "<button id=\""+index+"\" class=\"del\" onclick=\"deleteItem(event)\">Delete</button>";
-            elements += "<span onclick=\"addSubToDo("+index+")\">Add sub ToDo</span>";
-            elements += "<input type=\"text\" name=\"editItem\" value=\""+items[index]+"\"><br></div></form>";
+            elements += "<form method='POST' action='/delete_item'>"
+            elements += "<div id ='div"+index+"'>";
+            elements += "<button id='"+index+"' class='del' onclick='deleteItem(event)'>Delete</button>";
+            elements += "<span onclick='addSubToDo("+index+")'>Add sub ToDo</span>";
+            elements += "<input type='text' name='editItem' value='"+items[index]+"'><br></div></form>";
         }
         document.getElementById("items").innerHTML = elements;
     }
@@ -52,7 +52,7 @@ var items = [];
     var subToDos = [];
     function addSubToDo(index)
     {
-        document.getElementById("div"+index).innerHTML += "<br><input type=\"text\" class =\"sub\"><br>";
+        document.getElementById("div"+index).innerHTML += "<br><input type='text' class ='sub'><br>";
     }
 
 </script>
