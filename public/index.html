@@ -10,6 +10,7 @@
 <form method = "POST" action ="/add_item">
     <h1>To-Do</h1>
     <input type = "text" name = "item" id="item" class = "main">
+
     <button onclick = "add()">Add</button>
     <br><br>
 </form>
@@ -23,6 +24,7 @@ var items = [];
         let item = document.getElementById("item").value;
         if(items.indexOf(item) == -1)
         {
+            console.log("in if");
             items.push(item);
             updateUI();
         }
@@ -38,22 +40,30 @@ var items = [];
     function updateUI()
     {
         let elements = "";
-        for(index = 0; index < items.length; index++)
+        for(let index = 0; index < items.length; index++)
         {
-            elements += "<form method='POST' action='/delete_item'>"
             elements += "<div id ='div"+index+"'>";
+            elements += "<form style='style:left;' method='POST' action='/delete_item'>";
             elements += "<button id='"+index+"' class='del' onclick='deleteItem(event)'>Delete</button>";
-            elements += "<span onclick='addSubToDo("+index+")'>Add sub ToDo</span>";
-            elements += "<input type='text' name='editItem' value='"+items[index]+"'><br></div></form>";
+            elements += "<span onclick='addSubToDoToUI("+index+")'>Add sub ToDo</span>";
+            elements += "<input hidden type='text' name='editItem' value='"+items[index]+"'></form>";
+            elements += "<form id='form"+index+"' style='style:right'' method='POST' action='/update'>";
+            elements += "<input type='text' id='editItem"+index+"' name='editItem' value='"+items[index]+"' onchange='updateItems("+index+")'>";
+            elements += "<input hidden type ='text' name='index' value='"+index+"'> <br></form></div>";
         }
         document.getElementById("items").innerHTML = elements;
     }
 
-    var subToDos = [];
-    function addSubToDo(index)
+    function updateItems(index)
     {
-        document.getElementById("div"+index).innerHTML += "<br><input type='text' class ='sub'><br>";
+        items[index] = document.getElementById("editItem"+index).value;
+        document.getElementById("form"+index).submit();
     }
 
+    var subToDos = [];
+    function addSubToDoToUI(index)
+    {
+        document.getElementById("div"+index).innerHTML += "<br><button onclick='addSubToDo('"+index+"')' class='sub subAdd'>Add</button> <input type='text' class='subToDo' name='subToDo'><br>";
+    }
 </script>
 </html>
