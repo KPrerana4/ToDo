@@ -1,0 +1,45 @@
+button{
+    background : deepskyblue;
+    font-size : 20px;
+    border : 2px solid black;
+    border-radius : 6px;
+    height : 30px;
+    width : 80px;
+    margin-left : 20px;
+}
+
+input{
+    border : none;
+    font-size : 20px;
+    margin-left : 15px;
+}
+
+.main{
+    border : 2px solid black;
+    border-radius : 6px;
+    width : 300px;
+    height : 45px;
+    font-size : 20px;
+}
+
+.del{
+    background : Gainsboro;
+    margin-left :15px;
+    margin-right : 15px;
+    font-size : 15px;
+}
+
+span{
+    border : 2px solid black;
+    border-radius: 6px;
+    padding : 3px;
+}
+
+.sub{
+    border : 1px solid black;
+    border-radius : 6px;
+    width : 150px;
+    height : 35px;
+    font-size : 15px;
+    margin-left : 200px;
+}

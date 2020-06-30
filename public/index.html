@@ -1,0 +1,51 @@
+<html>
+<head>
+    <title>
+        sample
+    </title>
+    <link rel = "stylesheet" href = "style.css">
+</head>
+
+<body>
+<form method = "POST" action ="/add_item">
+    <h1>To-Do</h1>
+    <input type = "text" name = "item" id="item" class = "main">
+    <button onclick = "add()">Add</button>
+    <br><br>
+</form>
+<div id = "items"></div>
+</body>
+
+<script>
+var items = [];
+    function add()
+    {
+        let item = document.getElementById("item").value;
+        if(items.indexOf(item) == -1)
+        {
+            items.push(item);
+            updateUI();
+        }
+    }
+
+    function deleteItem(event)
+    {
+        let id ="div"+event.target.id;
+        document.getElementById(id).style.display = "none";
+        items.splice(event.target.id,1);
+    }
+
+    function updateUI()
+    {
+        let elements = "";
+        for(index = 0; index < items.length; index++)
+        {
+            elements += "<form method = \"POST\" action = \"/delete_item\">"
+            elements += "<div id =\"div"+index+"\">";
+            elements += "<button id=\""+index+"\" class=\"del\" onclick=\"deleteItem(event)\">Delete</button>";
+            elements += "<input type=\"text\" name=\"editItem\" value=\""+items[index]+"\"><br></div></form>";
+        }
+        document.getElementById("items").innerHTML = elements;
+    }
+</script>
+</html>
