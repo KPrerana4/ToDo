@@ -21,6 +21,7 @@ app.post("/delete_item",(req,res) => {
     {
         if(toDos[index].item === req.body.editItem)
             {
+                console.log("in if");
                 reqIndex = index;
                 break;
             }
@@ -29,6 +30,14 @@ app.post("/delete_item",(req,res) => {
     res.status(204).send();
 });
 
+app.post('/update',(req,res) =>{
+    let reqIndex = req.body.index;
+    let value = req.body.editItem;
+    toDos.splice(reqIndex , 1);
+    toDos.splice(reqIndex, 0 , {item : value});
+    res.status(204).send();
+});
+
 app.get("/toDoList",(req,res) => res.json(toDos));
 
-app.listen(5200, () => console.log("running"));
+app.listen(5400, () => console.log("running"));
