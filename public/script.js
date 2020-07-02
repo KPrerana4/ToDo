@@ -40,6 +40,7 @@ var subToDos = [];
             if(subToDos[index].length != 0)
             {
                 elements += "<div><form id='subForm"+index+"' method='POST' action='/update_sub_todo'>";
+                elements += "<span class='normalText'>Sub To Dos:</span>";
                 elements += "<input type='text' id='sub"+index+"' class='subToDo' name='subToDo' value='"+subToDos[index]+"'  onchange='updateSubToDo("+index+")'>";
                 elements += "<input hidden type='text' name='index' value='"+index+"' <br></form></div>";
             }
@@ -60,7 +61,7 @@ var subToDos = [];
         {
             let elements = "";
             elements += "<div><form id='subForm"+index+"' method='POST' action='/update_sub_todo'>";
-            elements += "<input type='text' id='sub"+index+"' class='subToDo' name='subToDo'   onchange='updateSubToDo("+index+")'>";
+            elements += "<span class='normalText'>Sub To Dos:</span><input type='text' id='sub"+index+"' class='subToDo' name='subToDo'   onchange='updateSubToDo("+index+")'>";
             elements += "<input hidden type='text' name='index' value='"+index+"' <br></form></div>";
             document.getElementById("div"+index).innerHTML += elements;
         }
