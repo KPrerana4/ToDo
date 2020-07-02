@@ -10,14 +10,16 @@
 <center>
 <fieldset>
     <legend><h1>To-Do</h1></legend>
-<form method = "POST" action ="/add_item">
-    <input type = "text" name = "tempItem" id="tempItem" class = "main">
-    <input hidden type="text" name="item" id="item">
+    <form method = "POST" action ="/add_item">
+        <input type = "text" name = "tempItem" id="tempItem" class = "main" placeholder="Enter To-Do">
+        <input hidden type="text" name="item" id="item">
 
-    <button onclick = "add()">Add</button>
-    <br><br>
-</form>
-<div id = "items"></div>
+        <button onclick = "add()">Add</button>
+        <br><br>
+        Use comma to separate sub To-Dos of main To-Dos
+        <br><br>
+    </form>
+    <div id = "items"></div>
 </fieldset>
 </center>
 </body>
