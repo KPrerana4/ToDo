@@ -1,0 +1,27 @@
+{
+  "name": "ToDo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index",
+    "dev" : "nodemon index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KPrerana4/ToDo.git"
+  },
+  "keywords": [],
+  "author": "Prerana",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KPrerana4/ToDo/issues"
+  },
+  "homepage": "https://github.com/KPrerana4/ToDo#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
