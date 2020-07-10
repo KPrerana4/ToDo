@@ -35,14 +35,16 @@ var subToDos = [];
             elements += "<input hidden type='text' name='editItem' value='"+items[index]+"'></form>";
             elements += "<form id='form"+index+"' method='POST' action='/update'>";
             elements += "<input type='text' id='editItem"+index+"' name='editItem' value='"+items[index]+"' onchange='updateItems("+index+")'>";
-            elements += "<input hidden type ='text' name='index' value='"+index+"'> <br></form>";
+            elements += "<input hidden type ='text' name='index' value='"+index+"'>";
+            elements += "<input hidden type = 'text' name ='oldText' value='"+items[index]+"'> <br></form>";
 
             if(subToDos[index].length != 0)
             {
                 elements += "<div><form id='subForm"+index+"' method='POST' action='/update_sub_todo'>";
                 elements += "<span class='normalText'>Sub To Dos:</span>";
                 elements += "<input type='text' id='sub"+index+"' class='subToDo' name='subToDo' value='"+subToDos[index]+"'  onchange='updateSubToDo("+index+")'>";
-                elements += "<input hidden type='text' name='index' value='"+index+"' <br></form></div>";
+                elements += "<input hidden type='text' name='index' value='"+index+"' <br>";
+                elements += "<input hidden type='text' name='mainToDo' value='"+items[index]+"'></form></div>";
             }
             elements += "</div>";
         }
@@ -53,6 +55,7 @@ var subToDos = [];
     {
         items[index] = document.getElementById("editItem"+index).value;
         document.getElementById("form"+index).submit();
+        updateUI();
     }
 
     function addSubToDoToUI(index)
@@ -62,7 +65,8 @@ var subToDos = [];
             let elements = "";
             elements += "<div><form id='subForm"+index+"' method='POST' action='/update_sub_todo'>";
             elements += "<span class='normalText'>Sub To Dos:</span><input type='text' id='sub"+index+"' class='subToDo' name='subToDo'   onchange='updateSubToDo("+index+")'>";
-            elements += "<input hidden type='text' name='index' value='"+index+"' <br></form></div>";
+            elements += "<input hidden type='text' name='index' value='"+index+"' <br>";
+            elements += "<input hidden type='text' name='mainToDo' value='"+items[index]+"'></form></div>";
             document.getElementById("div"+index).innerHTML += elements;
         }
     }
