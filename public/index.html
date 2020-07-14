@@ -6,12 +6,12 @@
     <link rel = "stylesheet" href = "style.css">
 </head>
 
-<body>
+<body onload="renderData()">
 <center>
 <fieldset>
     <legend><h1>To-Do</h1></legend>
     <form method = "POST" action ="/add_item">
-        <input type = "text" name = "tempItem" id="tempItem" class = "main" placeholder="Enter To-Do">
+        <input type = "text" name = "temporary" id="temporary" class = "main" placeholder="Enter To-Do" autofocus>
         <input hidden type="text" name="item" id="item">
 
         <button onclick = "add()">Add</button>
