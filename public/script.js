@@ -1,78 +1,57 @@
-var items = [];
-var subToDos = [];
-    function add()
-    {
-        let item = document.getElementById("tempItem").value;
-        if(items.indexOf(item) == -1 && item != "")
-        {
-            items.push(item);
-            subToDos.push([]);
-            document.getElementById("item").value = document.getElementById("tempItem").value;
-            document.getElementById("tempItem").value = "";
-            updateUI();
-        }
-    }
+var items;
 
-    function deleteItem(event)
-    {
-        let id ="div"+event.target.id;
-        document.getElementById(id).style.display = "none";
-        items.splice(event.target.id,1);
-        subToDos.splice(event.target.id,1);
-        document.getElementById("delForm"+event.target.id).submit();
+function renderData()
+{
+    var request = new XMLHttpRequest();
+    request.open("GET","http://localhost:5500/ToDos");
+    request.onload = function(){
+        items = JSON.parse(this.response);
         updateUI();
     }
+    request.send();
+}
 
-    function updateUI()
+function add()
+{
+    document.getElementById("item").value = document.getElementById("temporary").value;
+    document.getElementById("temporary").value = "";
+}
+
+function updateUI()
+{
+    let elements = "";
+    for(let index = 0; index < items.length; index++)
+    {
+        elements += "<div id ='div"+index+"'>";
+        elements += "<form style='float:left;' method='POST' action='/delete_item'>";
+        elements += "<button class='del' onclick='this.form.submit()'>Delete</button>"
+        elements += "<span onclick='addSubToDoToUI("+index+")'>Add sub ToDos</span>";
+        elements += "<input hidden type='text' name='editItem' value='"+items[index].toDo+"'></form>";
+        elements += "<form method='POST' action='/update'>";
+        elements += "<input type='text' id='editItem"+index+"' name='editItem' value='"+items[index].toDo+"' onchange='this.form.submit()'>";
+        elements += "<input hidden type = 'text' name ='oldText' value='"+items[index].toDo+"'> <br></form>";
+
+        if(items[index].subToDos.length != 0)
+        {
+            elements += "<div><form method='POST' action='/update_sub_todo'>";
+            elements += "<input type='text' id='sub"+index+"' class='subToDo' name='subToDo' value='"+items[index].subToDos+"'>";
+            elements += "<button class='del update' onclick='this.form.submit()'>Add/Update Sub To-Dos</button>";
+            elements += "<input hidden type='text' name='mainToDo' value='"+items[index].toDo+"'></form></div>";
+        }
+        elements += "<br></div>";
+    }
+    document.getElementById("items").innerHTML = elements;
+}
+
+function addSubToDoToUI(index)
+{
+    if(items[index].subToDos.length == 0)
     {
         let elements = "";
-        for(let index = 0; index < items.length; index++)
-        {
-            elements += "<div id ='div"+index+"'>";
-            elements += "<form id='delForm"+index+"' style='float:left;' method='POST' action='/delete_item'>";
-            elements += "<span id='"+index+"' class='del' onclick='deleteItem(event)'>Delete</span>";
-            elements += "<span onclick='addSubToDoToUI("+index+")'>Add sub ToDos</span>";
-            elements += "<input hidden type='text' name='editItem' value='"+items[index]+"'></form>";
-            elements += "<form id='form"+index+"' method='POST' action='/update'>";
-            elements += "<input type='text' id='editItem"+index+"' name='editItem' value='"+items[index]+"' onchange='updateItems("+index+")'>";
-            elements += "<input hidden type ='text' name='index' value='"+index+"'>";
-            elements += "<input hidden type = 'text' name ='oldText' value='"+items[index]+"'> <br></form>";
-
-            if(subToDos[index].length != 0)
-            {
-                elements += "<div><form id='subForm"+index+"' method='POST' action='/update_sub_todo'>";
-                elements += "<span class='normalText'>Sub To Dos:</span>";
-                elements += "<input type='text' id='sub"+index+"' class='subToDo' name='subToDo' value='"+subToDos[index]+"'  onchange='updateSubToDo("+index+")'>";
-                elements += "<input hidden type='text' name='index' value='"+index+"' <br>";
-                elements += "<input hidden type='text' name='mainToDo' value='"+items[index]+"'></form></div>";
-            }
-            elements += "</div>";
-        }
-        document.getElementById("items").innerHTML = elements;
+        elements += "<div><form method='POST' action='/update_sub_todo'>";
+        elements += "<input type='text' id='sub"+index+"' class='subToDo' name='subToDo' placeholder='Enter Sub To-Dos'>";
+        elements += "<button class='del update' onclick='this.form.submit()'>Add/Update Sub To-Dos</button>";
+        elements += "<input hidden type='text' name='mainToDo' value='"+items[index].toDo+"'></form></div>";
+        document.getElementById("div"+index).innerHTML += elements;
     }
-
-    function updateItems(index)
-    {
-        items[index] = document.getElementById("editItem"+index).value;
-        document.getElementById("form"+index).submit();
-        updateUI();
-    }
-
-    function addSubToDoToUI(index)
-    {
-        if(subToDos[index].length == 0)
-        {
-            let elements = "";
-            elements += "<div><form id='subForm"+index+"' method='POST' action='/update_sub_todo'>";
-            elements += "<span class='normalText'>Sub To Dos:</span><input type='text' id='sub"+index+"' class='subToDo' name='subToDo'   onchange='updateSubToDo("+index+")'>";
-            elements += "<input hidden type='text' name='index' value='"+index+"' <br>";
-            elements += "<input hidden type='text' name='mainToDo' value='"+items[index]+"'></form></div>";
-            document.getElementById("div"+index).innerHTML += elements;
-        }
-    }
-
-    function updateSubToDo(index)
-    {
-        subToDos[index] = (document.getElementById("sub"+index).value).split(",");
-        document.getElementById("subForm"+index).submit();
-    }
+}
