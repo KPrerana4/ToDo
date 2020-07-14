@@ -13,25 +13,20 @@ mongoClient.connect("mongodb://localhost:27017/sample",{useUnifiedTopology: true
     db = client.db("sample");
 });
 
-var count = 0;
+
 app.post("/add_item",(req,res) => {
     let found = false;
     db.collection("ToDos").findOne({toDo : req.body.item}, (err,result) => {
         if(err) throw err;
-        if(result != undefined)
-            found = true;
+        if(result == undefined && req.body.item != "")
+            db.collection("ToDos").insertOne({toDo : req.body.item , subToDos : []});
     });
-    if(found == false)
-    {
-        db.collection("ToDos").insertOne({toDo : req.body.item , subToDos : []});
-        count++;
-    }
-    res.status(204).send();
+    res.redirect("/");
 });
 
 app.post("/delete_item",(req,res) => {
     db.collection("ToDos").deleteOne({toDo : req.body.editItem});
-    res.status(204).send();
+    res.redirect("/");
 });
 
 app.post('/update',(req,res) =>{
@@ -40,28 +35,24 @@ app.post('/update',(req,res) =>{
             toDo : req.body.editItem
         }
     });
-    res.status(204).send();
+    res.redirect("/");
 });
 
 app.post('/update_sub_todo',(req,res) => {
     db.collection("ToDos").updateOne({toDo : req.body.mainToDo},{
         $set : {
-            subToDos : req.body.subToDo.split(",")
+            subToDos : req.body.subToDo.split(",")[0] === "" ? [] : req.body.subToDo.split(",")
         }
     });
-
-    res.status(204).send();
+    res.redirect("/");
 });
 
 app.get("/ToDos",(req,res) => {
-    var result;
+    var result = [];
     db.collection("ToDos").find().toArray((err,data) => {
         if(err) throw err;
-        result = data;
-        console.log(data);
+        res.json(data);
     });
-    console.log(result);
-    res.json(result);
 });
 
-app.listen(5600, () => console.log("running"));
+app.listen(5500, () => console.log("running"));
