@@ -48,7 +48,6 @@ app.post('/update_sub_todo',(req,res) => {
 });
 
 app.get("/ToDos",(req,res) => {
-    var result = [];
     db.collection("ToDos").find().toArray((err,data) => {
         if(err) throw err;
         res.json(data);
